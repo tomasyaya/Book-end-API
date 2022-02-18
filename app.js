@@ -1,7 +1,8 @@
 const express = require("express");
-const projectRouter = require("./modules/project");
+const BookRouter = require("./modules/Book");
 const taskRouter = require("./modules/task");
 const authRouter = require("./modules/auth");
+const filesRouter = require("./modules/files");
 const { connectDb, middlewares, sessionConfig } = require("./config");
 
 async function start() {
@@ -15,8 +16,13 @@ async function start() {
     sessionConfig(app);
     // routes
     authRouter(app);
-    projectRouter(app);
+    BookRouter(app);
     taskRouter(app);
+    filesRouter(app);
+
+    app.get("/", (req, res) => {
+      res.status(200).json({ message: "running" });
+    });
 
     app.listen(PORT, () => console.log(`Server running at: ${PORT}`));
   } catch (err) {
