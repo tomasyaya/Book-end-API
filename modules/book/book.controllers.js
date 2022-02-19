@@ -10,7 +10,7 @@ function isObjectId(id) {
 async function getBooks(req, res) {
   try {
     const books = await Book.find().lean();
-    res.status(200).json(books).end();
+    return res.status(200).json(books).end();
     //res.render("/books")
   } catch (err) {
     res.status(400).json(err.message).end();
@@ -21,10 +21,10 @@ async function getBookById(req, res) {
   try {
     const { bookId } = req.params;
     if (!isObjectId(bookId)) {
-      res.status(400).json("Id not valid").end();
+      return res.status(400).json("Id not valid").end();
     }
-    const book = await Book.findById(bookId).populate("books").lean();
-    res.status(200).json(book).end();
+    const book = await Book.findById(bookId).lean();
+    return res.status(200).json(book).end();
   } catch (err) {
     res.status(400).json(err.message).end();
   }
@@ -33,7 +33,7 @@ async function getBookById(req, res) {
 async function createBook(req, res) {
   try {
     const book = await Book.create(req.body);
-    res.status(200).json(book).end();
+    return res.status(200).json(book).end();
   } catch (err) {
     res.status(400).json(err.message).end();
     console.log(err)
@@ -42,15 +42,15 @@ async function createBook(req, res) {
 
 async function updateBook(req, res) {
   try {
-    const { tookId } = req.params;
+    const { bookId } = req.params;
     if (!isObjectId(bookId)) {
-      res.status(400).json("Id not valid").end();
+      return res.status(400).json("Id not valid").end();
     }
     const book = await Book.findByIdAndUpdate(bookId, req.body, {
       new: true,
     }).lean();
 
-    res.status(200).json(book).end();
+    return res.status(200).json(book).end();
   } catch (err) {
     res.status(400).json(err.message).end();
   }
@@ -60,10 +60,10 @@ async function deleteBook(req, res) {
   try {
     const { bookId } = req.params;
     if (!isObjectId(bookId)) {
-      res.status(400).json("Id not valid").end();
+      return res.status(400).json("Id not valid").end();
     }
     const book = await Book.findByIdAndDelete(bookId).lean();
-    res.status(200).json(book).end();
+    return res.status(200).json(book).end();
   } catch (err) {
     res.status(400).json(err.message).end();
   }

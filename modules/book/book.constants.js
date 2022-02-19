@@ -1,7 +1,7 @@
 module.exports = {
   getBooks: "/Books",
-  getBookById: "/Books/:BookId",
+  getBookById: "/Books/:bookId",
   createBook: "/Books",
-  updateBook: "/Books/:BookId",
-  deleteBook: "/Books/:BookId",
+  updateBook: "/Books/:bookId",
+  deleteBook: "/Books/:bookId",
 };
