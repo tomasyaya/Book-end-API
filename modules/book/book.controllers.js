@@ -1,6 +1,7 @@
 const Book = require("./Book.model");
 const mongoose = require("mongoose");
 const { render } = require("express/lib/response");
+const { default: axios } = require("axios");
 
 function isObjectId(id) {
   return mongoose.Types.ObjectId.isValid(id);
@@ -8,9 +9,9 @@ function isObjectId(id) {
 
 async function getBooks(req, res) {
   try {
-    const Books = await Book.find().populate("tasks").lean();
-    res.status(200).json(Books).end();
-    res.render("/books")
+    const books = await Book.find().lean();
+    res.status(200).json(books).end();
+    //res.render("/books")
   } catch (err) {
     res.status(400).json(err.message).end();
   }
@@ -18,12 +19,12 @@ async function getBooks(req, res) {
 
 async function getBookById(req, res) {
   try {
-    const { BookId } = req.params;
-    if (!isObjectId(BookId)) {
+    const { bookId } = req.params;
+    if (!isObjectId(bookId)) {
       res.status(400).json("Id not valid").end();
     }
-    const Book = await Book.findById(BookId).populate("tasks").lean();
-    res.status(200).json(Book).end();
+    const book = await Book.findById(bookId).populate("books").lean();
+    res.status(200).json(book).end();
   } catch (err) {
     res.status(400).json(err.message).end();
   }
@@ -31,8 +32,8 @@ async function getBookById(req, res) {
 
 async function createBook(req, res) {
   try {
-    const Book = await Book.create(req.body);
-    res.status(200).json(Book).end();
+    const book = await Book.create(req.body);
+    res.status(200).json(book).end();
   } catch (err) {
     res.status(400).json(err.message).end();
     console.log(err)
@@ -41,15 +42,15 @@ async function createBook(req, res) {
 
 async function updateBook(req, res) {
   try {
-    const { BookId } = req.params;
-    if (!isObjectId(BookId)) {
+    const { tookId } = req.params;
+    if (!isObjectId(bookId)) {
       res.status(400).json("Id not valid").end();
     }
-    const Book = await Book.findByIdAndUpdate(BookId, req.body, {
+    const book = await Book.findByIdAndUpdate(bookId, req.body, {
       new: true,
     }).lean();
 
-    res.status(200).json(Book).end();
+    res.status(200).json(book).end();
   } catch (err) {
     res.status(400).json(err.message).end();
   }
@@ -57,12 +58,12 @@ async function updateBook(req, res) {
 
 async function deleteBook(req, res) {
   try {
-    const { BookId } = req.params;
-    if (!isObjectId(BookId)) {
+    const { bookId } = req.params;
+    if (!isObjectId(bookId)) {
       res.status(400).json("Id not valid").end();
     }
-    const Book = await Book.findByIdAndDelete(BookId).lean();
-    res.status(200).json(Book).end();
+    const book = await Book.findByIdAndDelete(bookId).lean();
+    res.status(200).json(book).end();
   } catch (err) {
     res.status(400).json(err.message).end();
   }
