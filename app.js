@@ -4,6 +4,11 @@ const taskRouter = require("./modules/task");
 const authRouter = require("./modules/auth");
 const filesRouter = require("./modules/files");
 const { connectDb, middlewares, sessionConfig } = require("./config");
+const path = require('path');
+
+const openReactApp = (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "public", "index.html"))
+}
 
 async function start() {
   try {
@@ -20,9 +25,7 @@ async function start() {
     taskRouter(app);
     filesRouter(app);
 
-    app.get("/", (req, res) => {
-      res.status(200).json({ message: "running" });
-    });
+    app.use(openReactApp)
 
     app.listen(PORT, () => console.log(`Server running at: ${PORT}`));
   } catch (err) {
