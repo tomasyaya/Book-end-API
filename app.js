@@ -7,7 +7,7 @@ const { connectDb, middlewares, sessionConfig } = require("./config");
 const path = require('path');
 
 const openReactApp = (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "public", "index.html"))
+ return res.sendFile(path.join(__dirname, "..", "public", "index.html"))
 }
 
 async function start() {
@@ -25,7 +25,7 @@ async function start() {
     taskRouter(app);
     filesRouter(app);
 
-    app.use(openReactApp)
+    app.get("*",openReactApp)
 
     app.listen(PORT, () => console.log(`Server running at: ${PORT}`));
   } catch (err) {
