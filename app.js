@@ -1,5 +1,5 @@
 const express = require("express");
-const BookRouter = require("./modules/Book");
+const BookRouter = require("./modules/book");
 const taskRouter = require("./modules/task");
 const authRouter = require("./modules/auth");
 const filesRouter = require("./modules/files");
