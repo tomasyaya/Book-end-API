@@ -1,5 +1,5 @@
-const controllers = require("./Book.controllers");
-const ROUTES = require("./Book.constants");
+const controllers = require("./book.controllers");
+const ROUTES = require("./book.constants");
 const express = require("express");
 const middlewares = require("../../middlewares")
 

@@ -1,7 +1,5 @@
-const Book = require("./Book.model");
+const Book = require("./book.model");
 const mongoose = require("mongoose");
-const { render } = require("express/lib/response");
-const { default: axios } = require("axios");
 
 function isObjectId(id) {
   return mongoose.Types.ObjectId.isValid(id);
